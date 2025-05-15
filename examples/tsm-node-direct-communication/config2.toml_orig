@@ -1,26 +1,25 @@
 
 [Player]
-	Index = 1
-	PrivateKey = "MHcCAQEEILWaOgXLxJUxodTrASskOfTN0y8RD/vuwuv/bOM+f2wroAoGCCqGSM49AwEHoUQDQgAEZsbGXaVTkx8iiXb7iDSBFs24xYdbe5jTRg57aU0F71BMxhlV46cKMsCDXARriCUBwApfCoAf/ByyJ7TpWRm4Rw=="
+	Index = 2
+	PrivateKey = "MHcCAQEEIHGb0I8CEE6db7/buOQiX8SgnbkkAI5aX9mowvCpUjOJoAoGCCqGSM49AwEHoUQDQgAEJZx6N1ARYmc/6DQBL/47yRL/dMvWi5UQRUiqA05pdjLAb3eXO6yPioocnZNxsQjCerxcMJ2LnvELmK5L6Ovsqw=="
+
+	# Allow any key to be exported
 	ExportWhiteList = ["*"]
 
 [Players.0]
 	Address = "tcp://tsm0-tsm-node:9000"
 	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0AyIB0e0A00Z+ovqDQ5mjffEqVabU/eEOwOOrkElnSX1qPkgIn5eLIOC7OWQq6dgZnJLjElg6R4vR5a91aAE8w=="
-
 [Players.1]
 	Address = "tcp://tsm1-tsm-node:9000"
 	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZsbGXaVTkx8iiXb7iDSBFs24xYdbe5jTRg57aU0F71BMxhlV46cKMsCDXARriCUBwApfCoAf/ByyJ7TpWRm4Rw=="
-
 [Players.2]
 	Address = "tcp://tsm2-tsm-node:9000"
 	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJZx6N1ARYmc/6DQBL/47yRL/dMvWi5UQRUiqA05pdjLAb3eXO6yPioocnZNxsQjCerxcMJ2LnvELmK5L6Ovsqw=="
 
 [Database]
-    DriverName = "sqlite3"
-    DataSourceName = "/tsm/sqlite.db"
-    EncryptorMasterPassword = "password"
-
+	DriverName = "postgres"
+	DataSourceName = "postgres://db2user:db2password@db2:5432/db2?sslmode=disable"
+	EncryptorMasterPassword = "db2masterPassword"
 
 [MPCTCPServer]
 	Port = 9000
@@ -33,13 +32,13 @@
     Prometheus = true
 
 [[Authentication.APIKeys]]
-	APIKey = "1PebMT+BBvWvEIrZb/UWIi2/1aCrUvQwjksa0ddA3mA=" # apikey1
+	APIKey = "FfrI+hyZAiVosAi53wewS0U1SsXKR0AEHZBM088rOeM=" # apikey2
 	ApplicationID = "demoapp"
-    
+
 [[Authentication.APIKeys]]
     APIKey = "NaseBBHEzG7KqmdqTH/vJZeYeZ7UCtCfsHra6QK9DHo=" # apikey3
     ApplicationID = "app2"
-
+    
 [DKLS19.Features]
     GenerateKey = true
     GeneratePresignatures = true
@@ -102,8 +101,3 @@
     ImportKeyShares = true
     HMACSHA256 = true
     HMACSHA512 = true
-
-[Log.StdoutLogger]
-    Level = "DEBUG"
-    Format = "TEXT"
-    ReportCaller = true

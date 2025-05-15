@@ -1,0 +1,63 @@
+replicaCount: 3
+index: 1
+
+nodeConfig:   # https://builder-vault-tsm.docs.blockdaemon.com/docs/example-tsm-configuration-file
+  configSecretName: tsm1-tsm-node
+
+image:
+  repository: <the name of the repository where tsm-node is stored>
+  pullPolicy: IfNotPresent
+  tag: "62.2.4" # override the version of the image
+
+sdkService:
+  type: NodePort
+  ports:
+    - port: 8080
+      name: sdk
+      targetPort: 8080
+    - port: 9000
+      name: mpc
+      targetPort: 9000
+
+mpcService:
+  enabled: false
+
+ingress:
+  enabled: true
+  className: "alb"
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/certificate-arn: <acm certificate arn>
+    alb.ingress.kubernetes.io/healthcheck-path: /ping
+  hosts:
+    - host: "tsm1-sdk.exmaple.com"
+      paths:
+        - path: /
+          pathType: Prefix
+          port: 8080
+
+affinity:
+  podAntiAffinity: # spread the pods across nodes
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - labelSelector:
+          matchExpressions:
+            - key: app.kubernetes.io/name
+              operator: In
+              values:
+                - tsm-node
+        topologyKey: kubernetes.io/hostname
+
+resources:
+  requests:
+    cpu: 6
+
+securityContext:
+  capabilities:
+   drop:
+   - ALL
+  readOnlyRootFilesystem: false   # Set to false for testing with the local sqlite
+  runAsNonRoot: true
+  runAsUser: 2000
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: "RuntimeDefault"

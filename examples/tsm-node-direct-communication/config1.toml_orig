@@ -17,10 +17,11 @@
 	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJZx6N1ARYmc/6DQBL/47yRL/dMvWi5UQRUiqA05pdjLAb3eXO6yPioocnZNxsQjCerxcMJ2LnvELmK5L6Ovsqw=="
 
 [Database]
-    DriverName = "sqlite3"
-    DataSourceName = "/tsm/sqlite.db"
-    EncryptorMasterPassword = "password"
-
+	DriverName = "mysql"
+	DataSourceName = "db1user:db1password@tcp(db1:3306)/db1?parseTime=true"
+	EncryptorMasterPassword = "db1masterPassword"
+	MaxIdleConns = 500
+	MaxOpenConns = 500
 
 [MPCTCPServer]
 	Port = 9000
@@ -102,8 +103,3 @@
     ImportKeyShares = true
     HMACSHA256 = true
     HMACSHA512 = true
-
-[Log.StdoutLogger]
-    Level = "DEBUG"
-    Format = "TEXT"
-    ReportCaller = true

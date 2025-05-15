@@ -101,3 +101,8 @@
     ImportKeyShares = true
     HMACSHA256 = true
     HMACSHA512 = true
+
+[Log.StdoutLogger]
+    Level = "DEBUG"
+    Format = "TEXT"
+    ReportCaller = true
