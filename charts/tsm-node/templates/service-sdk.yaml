@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tsm-node.fullname" . }}
+  labels:
+    {{- include "tsm-node.labels" . | nindent 4 }}
+  annotations:
+    {{- with .Values.sdkService.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  type: {{ .Values.sdkService.type | default "LoadBalancer" }}
+  externalTrafficPolicy: {{ .Values.sdkService.externalTrafficPolicy | default "Local" }}
+  ports:
+    {{- range .Values.sdkService.ports }}
+    - port: {{ .port }}
+      name: {{ .name }}
+      targetPort: {{ .targetPort | default .port }}
+      protocol: TCP
+    {{- end }}
+  selector:
+    {{- include "tsm-node.selectorLabels" . | nindent 4 }}

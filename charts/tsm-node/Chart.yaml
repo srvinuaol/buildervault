@@ -1,0 +1,9 @@
+apiVersion: v2
+name: tsm-node
+description: A Helm chart to deploy a Blockdaemon TSM node to kubernetes
+maintainers:
+  - name: Blockdaemon
+    email: sre@blockdaemon.com
+type: application
+version: 0.1.6
+appVersion: "62.2.4"

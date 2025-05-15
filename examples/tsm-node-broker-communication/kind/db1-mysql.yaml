@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      securityContext:
+        runAsUser: 999
+        fsGroup: 999
+      containers:
+      - name: mysql
+        image: mariadb:10.11
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_DATABASE
+          value: "db1"
+        - name: MARIADB_USER
+          value: "db1user"
+        - name: MARIADB_PASSWORD
+          value: "db1password"
+        - name: MARIADB_EXTRA_FLAGS
+          value: "--max_connections=1500"
+        - name: MARIADB_RANDOM_ROOT_PASSWORD
+          value: "1"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db1
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+    targetPort: 3306
+  selector:
+    app: mysql

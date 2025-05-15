@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "tsm-node.fullname" . }}
+  labels:
+    {{- include "tsm-node.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "tsm-node.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- if and (.Values.podAnnotations) (.Values.nodeConfig.configFile) }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+      {{- else if .Values.podAnnotations }}
+      annotations:
+        {{- with .Values.podAnnotations }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+      {{- else if .Values.nodeConfig.configFile }}
+      annotations:
+        checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum }}
+      {{- end }}
+      labels:
+        {{- include "tsm-node.labels" . | nindent 8 }}
+	{{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "tsm-node.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+          {{- range .Values.sdkService.ports }}
+            - containerPort: {{ .targetPort }}
+              name: {{ .name }}
+              protocol: TCP
+          {{- end }}
+          {{- range .Values.mpcService.ports }}
+            - containerPort: {{ .targetPort }}
+              name: {{ .name }}
+              protocol: TCP
+          {{- end }}
+          {{- if .Values.env }}
+          env:
+          {{- range .Values.env }}
+            - name: {{ .name }}
+              {{- if .value }}
+              value: {{ .value | quote }}
+              {{- else if .valueFrom }}
+              valueFrom:
+                {{- toYaml .valueFrom | nindent 16 }}
+              {{- end }}
+          {{- end }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: sdk
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: sdk
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+          - name: config-volume
+            mountPath: /config
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+      - name: config-volume
+        {{- if or (and .Values.nodeConfig.configFile .Values.nodeConfig.configSecretName) (and .Values.nodeConfig.configFile .Values.nodeConfig.configCSISecretStore) (and .Values.nodeConfig.configSecretName .Values.nodeConfig.configCSISecretStore) (and .Values.nodeConfig.configFile .Values.nodeConfig.configSecretName .Values.cconfig.onfigCSISecretStore) }}
+        {{- fail "config.configFile and config.configSecretName and config.configCSISecretStore are mutually exclusive" }}
+        {{- else if .Values.nodeConfig.configFile }}
+        configMap:
+          name: {{ template "tsm-node.fullname" . }}
+        {{- else if .Values.nodeConfig.configSecretName }}
+        secret:
+          secretName: {{ .Values.nodeConfig.configSecretName }}
+        {{- else if .Values.nodeConfig.configCSISecretStore.csi }}
+        csi:
+          {{- toYaml .Values.nodeConfig.configCSISecretStore.csi | nindent 10 }}
+        {{- end }}
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

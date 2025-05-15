@@ -1,0 +1,25 @@
+{{- if .Values.mpcService.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "tsm-node.fullname" . }}-mpc
+  labels:
+    {{- include "tsm-node.labels" . | nindent 4 }}
+  {{- with .Values.mpcService.annotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  {{- if .Values.mpcService.loadBalancerClass}}
+  loadBalancerClass: {{ .Values.mpcService.loadBalancerClass }}
+  {{- end }}
+  type: {{ .Values.mpcService.type }}
+  ports:
+  {{- range .Values.mpcService.ports }}
+    - port: {{ .port }}
+      name: {{ .name }}
+      protocol: TCP
+  {{- end }}
+  selector:
+    {{- include "tsm-node.selectorLabels" . | nindent 4 }}
+{{- end }}

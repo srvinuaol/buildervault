@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-conf
+data:
+  redis.conf: |
+    # Enable ACL module
+    aclfile /conf/users.acl
+    # Basic logging for debugging purposes (adjust as needed)
+    loglevel debug
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redis-acl
+data:
+  users.acl: |
+    user player0 on ~tsm:* +ping +blmpop +rpush +expire >pw0
+    user player1 on ~tsm:* +ping +blmpop +rpush +expire >pw1
+    user player2 on ~tsm:* +ping +blmpop +rpush +expire >pw2
+    user default on +@all ~* >default
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: redis
+  template:
+    metadata:
+      labels:
+        app: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis:7-alpine
+        command:
+        - "redis-server"
+        args:
+        - "/conf/redis.conf"
+        ports:
+        - containerPort: 6379
+        volumeMounts:
+          - name: conf-volume
+            mountPath: /conf/redis.conf
+            subPath: redis.conf
+          - name: acl-volume
+            mountPath: /conf/users.acl
+            subPath: users.acl
+      volumes:
+        - name: conf-volume
+          configMap:
+            name: redis-conf
+        - name: acl-volume
+          configMap:
+            name: redis-acl
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis
+spec:
+  type: ClusterIP
+  ports:
+  - port: 6379
+    targetPort: 6379
+  selector:
+    app: redis
+    

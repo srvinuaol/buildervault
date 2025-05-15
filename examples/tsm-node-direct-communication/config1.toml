@@ -1,0 +1,104 @@
+
+[Player]
+	Index = 1
+	PrivateKey = "MHcCAQEEILWaOgXLxJUxodTrASskOfTN0y8RD/vuwuv/bOM+f2wroAoGCCqGSM49AwEHoUQDQgAEZsbGXaVTkx8iiXb7iDSBFs24xYdbe5jTRg57aU0F71BMxhlV46cKMsCDXARriCUBwApfCoAf/ByyJ7TpWRm4Rw=="
+	ExportWhiteList = ["*"]
+
+[Players.0]
+	Address = "tcp://tsm0-tsm-node:9000"
+	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0AyIB0e0A00Z+ovqDQ5mjffEqVabU/eEOwOOrkElnSX1qPkgIn5eLIOC7OWQq6dgZnJLjElg6R4vR5a91aAE8w=="
+
+[Players.1]
+	Address = "tcp://tsm1-tsm-node:9000"
+	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZsbGXaVTkx8iiXb7iDSBFs24xYdbe5jTRg57aU0F71BMxhlV46cKMsCDXARriCUBwApfCoAf/ByyJ7TpWRm4Rw=="
+
+[Players.2]
+	Address = "tcp://tsm2-tsm-node:9000"
+	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJZx6N1ARYmc/6DQBL/47yRL/dMvWi5UQRUiqA05pdjLAb3eXO6yPioocnZNxsQjCerxcMJ2LnvELmK5L6Ovsqw=="
+
+[Database]
+    DriverName = "sqlite3"
+    DataSourceName = "/tsm/sqlite.db"
+    EncryptorMasterPassword = "password"
+
+
+[MPCTCPServer]
+	Port = 9000
+
+[SDKServer]
+	Port = 8080
+
+[MetricsServer]
+    Port = 9102  
+    Prometheus = true
+
+[[Authentication.APIKeys]]
+	APIKey = "1PebMT+BBvWvEIrZb/UWIi2/1aCrUvQwjksa0ddA3mA=" # apikey1
+	ApplicationID = "demoapp"
+    
+[[Authentication.APIKeys]]
+    APIKey = "NaseBBHEzG7KqmdqTH/vJZeYeZ7UCtCfsHra6QK9DHo=" # apikey3
+    ApplicationID = "app2"
+
+[DKLS19.Features]
+    GenerateKey = true
+    GeneratePresignatures = true
+    Sign = true
+    SignWithPresignature = true
+    GenerateRecoveryData = true
+    PublicKey = true
+    ChainCode = true
+    Reshare = true
+    CopyKey = true
+    BackupKeyShare = true
+    RestoreKeyShare = true
+    ExportKeyShares = true
+    ImportKeyShares = true
+    BIP32GenerateSeed = true
+    BIP32DeriveFromSeed = true
+    BIP32DeriveFromKey = true
+    BIP32ConvertKey = true
+    BIP32ExportSeed = true
+    BIP32ImportSeed = true
+    BIP32Info = true
+
+[SEPD19S.Features]
+    GenerateKey = true
+    GeneratePresignatures = true
+    Sign = true
+    SignWithPresignature = true
+    GenerateRecoveryData = true
+    PublicKey = true
+    ChainCode = true
+    Reshare = true
+    CopyKey = true
+    BackupKeyShare = true
+    RestoreKeyShare = true
+    ExportKeyShares = true
+    ImportKeyShares = true
+
+[ADN06.Features]
+    PublicKey = true
+    SignPKCS1v15 = true
+    SignPSS = true
+    Decrypt = true
+    ExportKeyShares = true
+    ImportKeyShares = true
+
+[MRZ15.AESFeatures]
+    GenerateKey = true
+    ExportKeyShares = true
+    ImportKeyShares = true
+    CTRKeyStream = true
+    CBCEncrypt = true
+    CBCDecrypt = true
+    GCMEncrypt = true
+    GCMDecrypt = true
+    CMAC = true
+
+[MRZ15.HMACFeatures]
+    GenerateKey = true
+    ExportKeyShares = true
+    ImportKeyShares = true
+    HMACSHA256 = true
+    HMACSHA512 = true

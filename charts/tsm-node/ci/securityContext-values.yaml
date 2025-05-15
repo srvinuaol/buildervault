@@ -1,0 +1,45 @@
+replicaCount: 1
+index: 0
+
+nodeConfig:
+  configFile: |
+    [Player]
+      Index = 0
+      PrivateKey = "replace me"
+
+    [Database]
+      DriverName = "sqlite3"
+      EncryptorMasterPassword = "ENCRYPTION_KEY"
+
+    [SDKServer]
+      Port = 8080
+image:
+  repository: <the name of the repository where tsm-node is stored>
+  pullPolicy: IfNotPresent
+  tag: "62.2.4"
+sdkService:
+  type: NodePort
+  ports:
+    - port: 8080
+      name: sdk
+      targetPort: 8080
+    - port: 9000
+      name: mpc
+      targetPort: 9000
+
+mpcService:
+  enabled: false
+
+ingress:
+  enabled: false
+
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 2000
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: "RuntimeDefault"

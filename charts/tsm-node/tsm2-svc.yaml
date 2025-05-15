@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    meta.helm.sh/release-name: tsm2
+    meta.helm.sh/release-namespace: tsm
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /ping
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: HTTP
+    service.beta.kubernetes.io/aws-load-balancer-internal: "true"
+    service.beta.kubernetes.io/aws-load-balancer-target-type: ip
+  creationTimestamp: "2025-05-07T19:21:03Z"
+  finalizers:
+  - service.k8s.aws/resources
+  labels:
+    app.kubernetes.io/instance: tsm2
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: tsm-node
+    app.kubernetes.io/version: 62.2.4
+    helm.sh/chart: tsm-node-0.1.6
+  name: tsm2-tsm-node
+  namespace: tsm
+  resourceVersion: "7684275"
+  uid: d143fcd3-4dd0-48ed-8852-adf2691e242d
+spec:
+  allocateLoadBalancerNodePorts: true
+  clusterIP: 10.100.61.18
+  clusterIPs:
+  - 10.100.61.18
+  externalTrafficPolicy: Cluster
+  internalTrafficPolicy: Cluster
+  ipFamilies:
+  - IPv4
+  ipFamilyPolicy: SingleStack
+  loadBalancerClass: service.k8s.aws/nlb
+  ports:
+  - name: sdk
+    nodePort: 31912
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  - name: mpc
+    nodePort: 31002
+    port: 9000
+    protocol: TCP
+    targetPort: 9000
+  selector:
+    app.kubernetes.io/instance: tsm2
+    app.kubernetes.io/name: tsm-node
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer:
+    ingress:
+    - hostname: k8s-tsm-tsm2tsmn-c95429c7b2-f7175b41ffd3f2e6.elb.us-east-1.amazonaws.com

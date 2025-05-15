@@ -1,0 +1,120 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: db-setup-script
+data:
+  db-setup.sh: |
+    #!/bin/bash
+
+    apt-get update && apt-get install -y jq python3 python3-pip
+
+    pip3 install awscli --break-system-packages
+
+    # Check if the correct number of arguments is given
+    if [ "$#" -ne 1 ]; then
+        echo "Usage: $0 <user_and_schema_name>"
+        exit 1
+    fi
+
+    # Assign the argument to a variable
+    USERNAME=$1
+    SCHEMA_NAME=$1
+
+    export AWS_DEFAULT_REGION="us-east-1"
+
+    # Name of the secret in AWS Secrets Manager for initial RDS credentials
+    INITIAL_SECRET_NAME="tsm-db-secret-1"
+
+    # Name of the new secret for the user's credentials
+    NEW_SECRET_NAME="tsm-db-secret-1-$USERNAME"
+
+    # Use AWS CLI to retrieve the initial secret value
+    INITIAL_SECRET_VALUE=$(aws secretsmanager get-secret-value --secret-id $INITIAL_SECRET_NAME --query SecretString --output text)
+
+    # Exit if the initial secret cannot be retrieved
+    if [ $? -ne 0 ]; then
+        echo "Failed to retrieve initial secret from AWS Secrets Manager."
+        exit 1
+    fi
+
+    # Parse the JSON secret value to extract the RDS credentials
+    RDS_ENDPOINT=$(echo $INITIAL_SECRET_VALUE | jq -r '.host')
+    RDS_PORT=$(echo $INITIAL_SECRET_VALUE | jq -r '.port')
+    MASTER_USERNAME=$(echo $INITIAL_SECRET_VALUE | jq -r '.username')
+    MASTER_PASSWORD=$(echo $INITIAL_SECRET_VALUE | jq -r '.password')
+
+    # Generate a random password for the new user
+    PASSWORD=$(openssl rand -base64 12)
+
+    # Connect to the RDS database and execute the SQL commands
+    PGPASSWORD=$MASTER_PASSWORD psql -h $RDS_ENDPOINT -p $RDS_PORT -U $MASTER_USERNAME <<EOF
+
+    -- Create the database
+    CREATE DATABASE $USERNAME;
+
+    -- Connect to the newly created database
+    \c $USERNAME
+
+    -- Create a new role/user with the generated password
+    CREATE ROLE $USERNAME LOGIN PASSWORD '$PASSWORD';
+
+    -- Create a new schema
+    CREATE SCHEMA $SCHEMA_NAME AUTHORIZATION $USERNAME;
+
+    -- Grant usage on the schema to the role
+    GRANT USAGE ON SCHEMA $SCHEMA_NAME TO $USERNAME;
+
+    -- Grant all privileges on the schema to the role
+    GRANT ALL PRIVILEGES ON SCHEMA $SCHEMA_NAME TO $USERNAME;
+
+    EOF
+
+    # Check if the commands were executed successfully
+    if [ $? -eq 0 ]; then
+        echo "Database, user, and schema setup completed successfully."
+        # Store the new credentials in AWS Secrets Manager
+        NEW_SECRET_VALUE=$(printf '{"username":"%s","password":"%s"}' "$USERNAME" "$PASSWORD")
+        aws secretsmanager create-secret --name $NEW_SECRET_NAME --secret-string "$NEW_SECRET_VALUE"
+        if [ $? -eq 0 ]; then
+            echo "New credentials stored in AWS Secrets Manager successfully."
+        else
+            echo "Failed to store new credentials in AWS Secrets Manager."
+            exit 1
+        fi
+    else
+        echo "Failed to set up database, user, and schema."
+        exit 1
+    fi
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: db-setup-job-1
+spec:
+  template:
+    spec:
+      serviceAccountName: dbsetupserviceacct
+      containers:
+        - name: db-setup
+          image: postgres:latest
+          command: ["/bin/bash", "/scripts/db-setup.sh", "tsm1"]
+          env:
+            - name: AWS_DEFAULT_REGION
+              value: "us-east-1"
+            # Set other required environment variables here
+          volumeMounts:
+            - name: script-volume
+              mountPath: /scripts
+      restartPolicy: Never
+      volumes:
+        - name: script-volume
+          configMap:
+            name: db-setup-script
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dbsetupserviceacct
+  annotations:
+    eks.amazonaws.com/role-arn: <role-arn>

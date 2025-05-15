@@ -1,0 +1,154 @@
+replicaCount: 2
+index: 0
+
+env:
+  - name: DATABASE_ENCRYPTOR_MASTER_PASSWORD
+    value: "db0masterPassword"
+  - name: PLAYER_PRIVATE_KEY
+    value: "MHcCAQEEIJZ2T0ESxG34wA77rhn+9KMOrkz296jeDUOenHsLmWO/oAoGCCqGSM49AwEHoUQDQgAE0AyIB0e0A00Z+ovqDQ5mjffEqVabU/eEOwOOrkElnSX1qPkgIn5eLIOC7OWQq6dgZnJLjElg6R4vR5a91aAE8w=="
+  - name: PLAYER0_REDIS_PASSWORD
+    value: "pw0"
+  - name: PLAYER0_DATABASE_PASSWORD
+    value: "db0password"
+  - name: PLAYER0_APIKEY
+    value: "IntV2sEZRwwd2F+UkDLC7zmFhwvpxAwb0eQKwdEnSZU=" # apikey0
+  - name: PLAYERS0_PUBLIC_KEY
+    value: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE0AyIB0e0A00Z+ovqDQ5mjffEqVabU/eEOwOOrkElnSX1qPkgIn5eLIOC7OWQq6dgZnJLjElg6R4vR5a91aAE8w=="
+  - name: PLAYERS1_PUBLIC_KEY
+    value: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEZsbGXaVTkx8iiXb7iDSBFs24xYdbe5jTRg57aU0F71BMxhlV46cKMsCDXARriCUBwApfCoAf/ByyJ7TpWRm4Rw=="
+  - name: PLAYERS2_PUBLIC_KEY
+    value: "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJZx6N1ARYmc/6DQBL/47yRL/dMvWi5UQRUiqA05pdjLAb3eXO6yPioocnZNxsQjCerxcMJ2LnvELmK5L6Ovsqw=="
+
+nodeConfig:
+  configFile: |
+    [Player]
+        Index = 0
+        PrivateKey = "{{ env `PLAYER_PRIVATE_KEY` }}"
+        ExportWhiteList = ["*"]
+
+    [Players.0]
+        PublicKey = "{{ env `PLAYERS0_PUBLIC_KEY` }}"
+
+    [Players.1]
+        PublicKey = "{{ env `PLAYERS1_PUBLIC_KEY` }}"
+
+    [Players.2]
+        PublicKey = "{{ env `PLAYERS2_PUBLIC_KEY` }}"
+
+    [Database]
+        DriverName = "postgres"
+        DataSourceName = "postgres://db0user:{{ env `PLAYER0_DATABASE_PASSWORD` }}@db0:5432/db0?sslmode=disable"
+        EncryptorMasterPassword = "{{ env `DATABASE_ENCRYPTOR_MASTER_PASSWORD` }}"
+        MaxIdleConns = 500
+        MaxOpenConns = 500
+
+    [SDKServer]
+        Port = 8080
+
+    [[Authentication.APIKeys]]
+        APIKey = "{{ env `PLAYER0_APIKEY` }}"
+        ApplicationID = "demoapp"
+
+    [MetricsServer]
+      Port = 9102
+      Prometheus = true
+
+    [MPCRedisServer]
+        ServerURL = "redis://player0:{{ env `PLAYER0_REDIS_PASSWORD` }}@redis:6379/0"
+        SendBatchSize = 20
+        ReceiveBatchSize = 20
+        MaxMessageReceivers = 30
+        MaxSessions = 10000
+        ExpireKeys = false
+        ClusterMode = false
+
+    [DKLS19.Features]
+        GenerateKey = true
+        GeneratePresignatures = true
+        Sign = true
+        SignWithPresignature = true
+        GenerateRecoveryData = true
+        PublicKey = true
+        ChainCode = true
+        Reshare = true
+        CopyKey = true
+        BackupKeyShare = true
+        RestoreKeyShare = true
+        ExportKeyShares = true
+        ImportKeyShares = true
+        BIP32GenerateSeed = true
+        BIP32DeriveFromSeed = true
+        BIP32DeriveFromKey = true
+        BIP32ConvertKey = true
+        BIP32ExportSeed = true
+        BIP32ImportSeed = true
+        BIP32Info = true
+
+    [SEPD19S.Features]
+        GenerateKey = true
+        GeneratePresignatures = true
+        Sign = true
+        SignWithPresignature = true
+        GenerateRecoveryData = true
+        PublicKey = true
+        ChainCode = true
+        Reshare = true
+        CopyKey = true
+        BackupKeyShare = true
+        RestoreKeyShare = true
+        ExportKeyShares = true
+        ImportKeyShares = true
+
+image:
+  repository: <the name of the repository where tsm-node is stored>
+  pullPolicy: IfNotPresent
+  tag: "69.0.0" # override the version of the image
+
+sdkService:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      name: sdk
+      targetPort: 8080
+
+mpcService:
+  enabled: false
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+  hosts:
+    - host: "localhost"
+      paths:
+        - path: /tsm0(/|$)(.*)
+          pathType: ImplementationSpecific
+          port: 8080
+
+# affinity:
+#   podAntiAffinity: # spread the pods across nodes
+#     requiredDuringSchedulingIgnoredDuringExecution:
+#       - labelSelector:
+#           matchExpressions:
+#             - key: app.kubernetes.io/name
+#               operator: In
+#               values:
+#                 - tsm-node
+#         topologyKey: kubernetes.io/hostname
+
+resources:
+  requests:
+    cpu: 0.25
+
+securityContext:
+  capabilities:
+   drop:
+   - ALL
+  readOnlyRootFilesystem: false   # Set to false for testing with the local sqlite
+  runAsNonRoot: true
+  runAsUser: 2000
+  allowPrivilegeEscalation: false
+  seccompProfile:
+    type: "RuntimeDefault"

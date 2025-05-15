@@ -1,0 +1,55 @@
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - labelSelector:
+        matchExpressions:
+        - key: app.kubernetes.io/name
+          operator: In
+          values:
+          - tsm-node
+      topologyKey: kubernetes.io/hostname
+image:
+  pullPolicy: IfNotPresent
+  repository: bv.sepior.net/tsm-node
+  tag: 70.1.0
+imagePullSecrets:
+- name: regcred
+index: 1
+ingress:
+  enabled: false
+mpcService:
+  enabled: false
+nodeConfig:
+  configSecretName: tsm1-tsm-node
+replicaCount: 3
+resources:
+  requests:
+    cpu: 500m
+sdkService:
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-path: /ping
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-port: "8080"
+    service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: http
+    service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+    service.beta.kubernetes.io/aws-load-balancer-type: external
+  externalTrafficPolicy: Cluster
+  loadBalancerClass: service.k8s.aws/nlb
+  ports:
+  - name: sdk
+    port: 8080
+    targetPort: 8080
+  - name: mpc
+    port: 9000
+    targetPort: 9000
+  type: LoadBalancer
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+  runAsUser: 2000
+  seccompProfile:
+    type: RuntimeDefault

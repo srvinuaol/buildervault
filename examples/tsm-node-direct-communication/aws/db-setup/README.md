@@ -1,0 +1,1 @@
+This directory contains an example of how you can bootstrap a postgres RDS for use with TSM.

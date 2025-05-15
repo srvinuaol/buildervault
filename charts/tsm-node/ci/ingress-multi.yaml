@@ -1,0 +1,49 @@
+replicaCount: 1
+index: 0
+
+nodeConfig:
+  configFile: |
+    [Player]
+      Index = 0
+      PrivateKey = "replace me"
+
+    [Database]
+      DriverName = "sqlite3"
+      DataSourceName = "/tmp/tsmdb"
+      EncryptorMasterPassword = "ENCRYPTION_KEY"
+
+    [SDKServer]
+      Port = 8080
+image:
+  repository: <the name of the repository where tsm-node is stored>
+  pullPolicy: IfNotPresent
+  tag: "62.2.4"
+sdkService:
+  ports:
+    - port: 8080
+      name: sdk
+      targetPort: 8080
+    - port: 9000
+      name: mpc
+      targetPort: 9000
+
+mpcService:
+  enabled: false
+
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+  hosts:
+    - host: "tsm-sdk.example.com"
+      paths:
+        - path: /tsm0/(.*)
+          pathType: ImplementationSpecific
+          serviceName: tsm0-tsm-node
+          port: 8080
+        - path: /tsm1/(.*)
+          pathType: ImplementationSpecific
+          serviceName: tsm1-tsm-node
+          port: 8080
