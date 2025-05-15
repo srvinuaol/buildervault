@@ -1,0 +1,60 @@
+time=2025-05-15T16:59:00.409Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/connectionpool.go:213 msg="connected to player 2 at tsm2-tsm-node:9000 over a multiplexed connection"
+time=2025-05-15T16:59:00.409Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:194 msg="sending channel header to player 2 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.409Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:200 msg="sending handshake message to player 2 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.410Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/connectionpool.go:213 msg="connected to player 1 at tsm1-tsm-node:9000 over a multiplexed connection"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:194 msg="sending channel header to player 1 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:200 msg="sending handshake message to player 1 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:279 msg="receiving handshake message from player 2 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:279 msg="receiving handshake message from player 1 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.412Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 1 for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:10.410Z level=WARN source=/app/tsm/internal/endpoints/utils.go:182 msg="endpoint error" error="an error occurred during key generation: error completing handshakes: context deadline exceeded" sessionID=gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs stack.0=/app/tsm/internal/endpoints/utils.go:182 stack.1=/app/tsm/internal/endpoints/authentication.go:145 stack.2=/usr/local/go/src/net/http/server.go:2294 stack.3=/usr/local/go/src/net/http/server.go:3827 stack.4=/usr/local/go/src/runtime/asm_amd64.s:1700
+FilePath = ''
+ReportCaller = true
+
+[StdoutLogger]
+Level = 'DEBUG'
+Format = 'TEXT'
+ReportCaller = true
+
+Starting node...
+Node started!
+time=2025-05-15T16:59:00.406Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:194 msg="sending channel header to player 2 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.406Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:200 msg="sending handshake message to player 2 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.408Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:147 msg="handling connection from 192.168.103.255:36994"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.103.255:36994"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:328 msg="receiving handshake message from player 0 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:241 msg="accepted connection from player 0 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:284 msg="sending handshake message to player 0 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:279 msg="receiving handshake message from player 2 (channel 0) for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.411Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 0 for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:10.406Z level=WARN source=/app/tsm/internal/endpoints/utils.go:182 msg="endpoint error" error="an error occurred during key generation: error completing handshakes: context deadline exceeded" sessionID=gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs stack.0=/app/tsm/internal/endpoints/utils.go:182 stack.1=/app/tsm/internal/endpoints/authentication.go:145 stack.2=/usr/local/go/src/net/http/server.go:2294 stack.3=/usr/local/go/src/net/http/server.go:3827 stack.4=/usr/local/go/src/runtime/asm_amd64.s:1700
+Level = 'DEBUG'
+Format = 'TEXT'
+ReportCaller = true
+
+Starting node...
+Node started!
+time=2025-05-15T16:58:30.047Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:147 msg="handling connection from 192.168.103.255:40944"
+time=2025-05-15T16:58:30.051Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.103.255:40944"
+time=2025-05-15T16:58:30.051Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:265 msg="accepted connection from player 0 (channel 0) for unknown session id VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:58:40.052Z level=INFO source=/app/tsm/internal/distributed/connect.go:258 msg="closing unclaimed channel for session id VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:58:30.051Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:265 msg="accepted connection from player 0 (channel 0) for unknown session id VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:58:40.052Z level=INFO source=/app/tsm/internal/distributed/connect.go:258 msg="closing unclaimed channel for session id VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:59:00.403Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:147 msg="handling connection from 192.168.179.137:59414"
+time=2025-05-15T16:59:00.407Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.179.137:59414"
+time=2025-05-15T16:59:00.407Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:265 msg="accepted connection from player 1 (channel 0) for unknown session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:00.407Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:147 msg="handling connection from 192.168.103.255:51688"
+time=2025-05-15T16:59:00.409Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.103.255:51688"
+time=2025-05-15T16:59:00.410Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:265 msg="accepted connection from player 0 (channel 0) for unknown session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:10.408Z level=INFO source=/app/tsm/internal/distributed/connect.go:258 msg="closing unclaimed channel for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:10.410Z level=INFO source=/app/tsm/internal/distributed/connect.go:258 msg="closing unclaimed channel for session id gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+Starting node...
+Node started!
+time=2025-05-15T16:58:30.035Z level=DEBUG source=/app/tsm/internal/distributed/streamexecutor.go:126 msg="registered session ID VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:58:30.040Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:147 msg="handling connection from 192.168.179.137:38854"
+time=2025-05-15T16:58:30.042Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.179.137:38854"
+time=2025-05-15T16:58:30.042Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:328 msg="receiving handshake message from player 1 (channel 0) for session id VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:58:30.042Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:241 msg="accepted connection from player 1 (channel 0) for session id VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0"
+time=2025-05-15T16:58:40.041Z level=WARN source=/app/tsm/internal/endpoints/utils.go:182 msg="endpoint error" error="an error occurred during key generation: timed out while creating channels" sessionID=VIowBzUb5UyWPoXE0u7GKqSRqPdUMejEXdLo1kFkpr0 stack.0=/app/tsm/internal/endpoints/utils.go:182 stack.1=/app/tsm/internal/endpoints/authentication.go:145 stack.2=/usr/local/go/src/net/http/server.go:2294 stack.3=/usr/local/go/src/net/http/server.go:3827 stack.4=/usr/local/go/src/runtime/asm_amd64.s:1700
+time=2025-05-15T16:59:00.400Z level=DEBUG source=/app/tsm/internal/distributed/streamexecutor.go:126 msg="registered session ID gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs"
+time=2025-05-15T16:59:10.406Z level=WARN source=/app/tsm/internal/endpoints/utils.go:182 msg="endpoint error" error="an error occurred during key generation: timed out while creating channels" sessionID=gZjaCK40M7Z0sBlBJdZN_7qQtUI2sAXZe0bGwgQ0BVs stack.0=/app/tsm/internal/endpoints/utils.go:182 stack.1=/app/tsm/internal/endpoints/authentication.go:145 stack.2=/usr/local/go/src/net/http/server.go:2294 stack.3=/usr/local/go/src/net/http/server.go:3827 stack.4=/usr/local/go/src/runtime/asm_amd64.s:1700

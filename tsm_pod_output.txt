@@ -1,0 +1,50 @@
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.97.192:44458"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:328 msg="receiving handshake message from player 0 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:241 msg="accepted connection from player 0 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:284 msg="sending handshake message to player 0 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:279 msg="receiving handshake message from player 2 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 2 for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 0 for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:161 msg="fully connected with all players for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.968Z level=DEBUG source=/app/tsm/internal/distributed/streamexecutor.go:126 msg="registered session ID WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:16.969Z level=WARN source=/app/tsm/internal/endpoints/utils.go:182 msg="endpoint error" error="an error occurred during signing: timed out while creating channels" sessionID=WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw stack.0=/app/tsm/internal/endpoints/utils.go:182 stack.1=/app/tsm/internal/endpoints/authentication.go:145 stack.2=/usr/local/go/src/net/http/server.go:2294 stack.3=/usr/local/go/src/net/http/server.go:3827 stack.4=/usr/local/go/src/runtime/asm_amd64.s:1700
+FilePath = ''
+ReportCaller = true
+
+[StdoutLogger]
+Level = 'DEBUG'
+Format = 'TEXT'
+ReportCaller = true
+
+Starting node...
+Node started!
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:279 msg="receiving handshake message from player 1 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 1 for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.935Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:161 msg="fully connected with all players for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.972Z level=DEBUG source=/app/tsm/internal/distributed/streamexecutor.go:126 msg="registered session ID WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:06.972Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:188 msg="connecting to player 1 (channel 0) for session id WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:06.977Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/connectionpool.go:213 msg="connected to player 1 at tsm1-tsm-node:9000 over a multiplexed connection"
+time=2025-05-15T16:31:06.977Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:194 msg="sending channel header to player 1 (channel 0) for session id WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:06.977Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:200 msg="sending handshake message to player 1 (channel 0) for session id WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:06.977Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:279 msg="receiving handshake message from player 1 (channel 0) for session id WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:16.973Z level=WARN source=/app/tsm/internal/endpoints/utils.go:182 msg="endpoint error" error="an error occurred during signing: error completing handshakes: context deadline exceeded" sessionID=WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw stack.0=/app/tsm/internal/endpoints/utils.go:182 stack.1=/app/tsm/internal/endpoints/authentication.go:145 stack.2=/usr/local/go/src/net/http/server.go:2294 stack.3=/usr/local/go/src/net/http/server.go:3827 stack.4=/usr/local/go/src/runtime/asm_amd64.s:1700
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:328 msg="receiving handshake message from player 1 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:241 msg="accepted connection from player 1 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.97.192:38342"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:328 msg="receiving handshake message from player 0 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:241 msg="accepted connection from player 0 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:284 msg="sending handshake message to player 0 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 0 for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:284 msg="sending handshake message to player 1 (channel 0) for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 1 for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:31:06.934Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:161 msg="fully connected with all players for session id eEzs0YP8XxxKdcl0JljC9FyKIq60GONUulGDExFhM2Q"
+time=2025-05-15T16:27:56.095Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.97.192:52908"
+time=2025-05-15T16:27:56.095Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:328 msg="receiving handshake message from player 0 (channel 0) for session id JY4g3_oYnCHsFNFTaczXYE0Uv0IPAcMbg_t0m1EErW4"
+time=2025-05-15T16:27:56.095Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:241 msg="accepted connection from player 0 (channel 0) for session id JY4g3_oYnCHsFNFTaczXYE0Uv0IPAcMbg_t0m1EErW4"
+time=2025-05-15T16:27:56.095Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:284 msg="sending handshake message to player 0 (channel 0) for session id JY4g3_oYnCHsFNFTaczXYE0Uv0IPAcMbg_t0m1EErW4"
+time=2025-05-15T16:27:56.095Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:290 msg="fully connected with player 0 for session id JY4g3_oYnCHsFNFTaczXYE0Uv0IPAcMbg_t0m1EErW4"
+time=2025-05-15T16:27:56.095Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:161 msg="fully connected with all players for session id JY4g3_oYnCHsFNFTaczXYE0Uv0IPAcMbg_t0m1EErW4"
+time=2025-05-15T16:31:06.975Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:147 msg="handling connection from 192.168.97.192:44464"
+time=2025-05-15T16:31:06.977Z level=DEBUG source=/app/tsm/internal/distributed/playerproxy/tcpmux/server.go:241 msg="accepted multiplexed connection from 192.168.97.192:44464"
+time=2025-05-15T16:31:06.978Z level=DEBUG source=/app/tsm/internal/distributed/connect.go:265 msg="accepted connection from player 0 (channel 0) for unknown session id WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
+time=2025-05-15T16:31:16.978Z level=INFO source=/app/tsm/internal/distributed/connect.go:258 msg="closing unclaimed channel for session id WZqfSEAc9XQGVvdRBczV8ICNIE4n5_TubeRPXutC5Gw"
