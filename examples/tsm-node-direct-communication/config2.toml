@@ -17,9 +17,9 @@
 	PublicKey = "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEJZx6N1ARYmc/6DQBL/47yRL/dMvWi5UQRUiqA05pdjLAb3eXO6yPioocnZNxsQjCerxcMJ2LnvELmK5L6Ovsqw=="
 
 [Database]
-    DriverName = "sqlite3"
-    DataSourceName = "/tsm/sqlite.db"
-    EncryptorMasterPassword = "password"
+	DriverName = "postgres"
+	DataSourceName = "postgres://db2user:db2password@db2:5432/db2?sslmode=disable"
+	EncryptorMasterPassword = "db2masterPassword"
 
 [MPCTCPServer]
 	Port = 9000
@@ -38,7 +38,11 @@
 [[Authentication.APIKeys]]
     APIKey = "NaseBBHEzG7KqmdqTH/vJZeYeZ7UCtCfsHra6QK9DHo=" # apikey3
     ApplicationID = "app2"
-    
+
+[MultiInstance]
+    CleanupInterval = "5m"
+    CleanupProbability = 75
+
 [DKLS19.Features]
     GenerateKey = true
     GeneratePresignatures = true
